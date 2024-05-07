@@ -60,20 +60,21 @@ app.get('/cart', async (req, res) => {
 
 
 
-// app.post('/cart/add', async (req, res) => {
-//   const item = req.body;
-//   const userId = req.body.userId; 
-//   const docRef = db.collection(`cartItems_${userId}`).doc(String(item.id));
-//   await docRef.set(item);
-//   res.json(item);
-// });
+app.post('/order/add', async (req, res) => {
+  const { uid, order } = req.body;
+  const docRef = db.collection(`orders_${uid}`).doc();
+  await docRef.set(order);
+  res.json(order);
+});
 
-// app.post('/cart/remove', async (req, res) => {
-//   const { id, userId } = req.body; 
-//   console.log(`ID: ${id}`); // Add this line
-//   await db.collection(`cartItems_${userId}`).doc(id).delete();
-//   res.json({ id });
-// });
+
+//  show all orders of that user whose uid matches 
+app.get('/order', async (req, res) => {
+  const userId = req.query.uid;
+  const snapshot = await db.collection(`orders_${userId}`).get();
+  const orders = snapshot.docs.map(doc => doc.data());
+  res.json(orders);
+});
 
 
 app.listen(port, () => {
