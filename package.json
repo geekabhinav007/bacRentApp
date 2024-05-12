@@ -4,7 +4,7 @@
   "description": "Web Client for rent application",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "author": "Kumar Abhinav",
   "license": "ISC",
