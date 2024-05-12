@@ -28,10 +28,14 @@ let db = admin.firestore();
 app.use(express.json());
 
 // Add a new item to the cart with the given ID because you are having uid also so only show cart items of that user whose uid matches
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 
 app.post('/cart/add', async (req, res) => {
   const item = req.body;
-  const userId = req.body.uid; 
+  const userId = req.body.uid;
   const docRef = db.collection(`cartItems_${userId}`).doc(String(item.id));
   await docRef.set(item);
   res.json(item);
@@ -40,7 +44,7 @@ app.post('/cart/add', async (req, res) => {
 
 // Remove the card item from that user cart only
 app.post('/cart/remove', async (req, res) => {
-  let { id, userId } = req.body; 
+  let { id, userId } = req.body;
   id = String(id);
   userId = String(userId);
   console.log(`ID: ${id}`);
